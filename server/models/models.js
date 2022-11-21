@@ -6,13 +6,16 @@ const User = sequelize.define("user", {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement:true},
     email: {type: DataTypes.STRING, unique: true, allowNull: false, },
     password: {type: DataTypes.STRING, allowNull: false},
+    fullName:{type: DataTypes.STRING, defaultValue: ""},
+    bGrade: {type: DataTypes.STRING, defaultValue: ""},
+    sGrade: {type: DataTypes.STRING, defaultValue: ""},
     isActivated: {type: DataTypes.BOOLEAN, defaultValue: false},
-    activationLink: {type: DataTypes.STRING, allowNull:false}
+    activationLink: {type: DataTypes.STRING, allowNull:false},
 })
 
 const RefrToken = sequelize.define("refrToken", {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement:true},
-    token:{type: DataTypes.STRING, allowNull: false, }
+    token:{type: DataTypes.TEXT, allowNull: false, }
 })
 
 const Climb = sequelize.define("climb",{

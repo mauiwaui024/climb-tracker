@@ -79,10 +79,20 @@ class UserService{
         user: userDto
         }
     }
+    
+    //страница settings
+    async getCurrentUser(userId){
+        const user = await User.findOne({where:{id:userId}})
+        const userDto = new UserDto(user)
+        return {user: userDto};
+    }
 
-    async getAllUsers(){
-        const users = await User.findAll();
-        return users;
+    async updateCurrentUser(userId, fullName, bGrade, sGrade){
+        const user = await User.findOne({where:{id:userId}})
+        await user.update({fullName, bGrade, sGrade})
+        const updatedUser =  await user.save()
+        const userDto = new UserDto(updatedUser)
+        return {updatedUser: userDto};
     }
 }
 

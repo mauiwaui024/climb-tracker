@@ -13,7 +13,10 @@ router.post('/login', userController.login);
 router.post('/logout', userController.logout);
 router.get('/activate/:link', userController.activate);
 router.get('/refresh',userController.refresh)
-router.get('/users', authMiddleware, userController.getUsers)//доступен только для авторизованных юзеров
+
+router.get('/user', authMiddleware, userController.getCurrent)//доступен только для авторизованных юзеров
+router.put('/update-user', authMiddleware, userController.updateCurrent)
+
 router.post("/create-climb", authMiddleware, climbController.createClimb)//доступен только для авторизованных юзеров
 router.delete("/delete/:id", authMiddleware, climbController.deleteClimb)//доступен только для авторизованных юзеров
 router.get('/climbs', authMiddleware, climbController.getClimbs) //доступен только для авторизованных юзеров

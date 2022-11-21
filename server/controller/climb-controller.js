@@ -36,5 +36,4 @@ class ClimbController{
         }
     }
 }
-
 module.exports = new ClimbController();

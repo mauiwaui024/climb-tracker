@@ -16,6 +16,7 @@ class UserController{
             return next(ApiError.BadRequest("Ошибка валидации", errors.array()))
            }
            const {email, password} = req.body;
+           
            const userData = await userService.registration(email, password)
            console.log(userData);
            res.cookie("refreshToken", userData.refreshToken, {maxAge: 30*24*60*60*1000, httpOnly:true})
@@ -28,6 +29,7 @@ class UserController{
     async login(req, res,next){
         try {
             const {email, password} = req.body;
+            
             const userData = await userService.login(email, password);
             res.cookie("refreshToken", userData.refreshToken, {maxAge: 30*24*60*60*1000, httpOnly:true})
             //помимо дб мы рефреш токен храним еще и в куках
@@ -65,23 +67,28 @@ class UserController{
             next(e)
         }
     }
-    async getUsers(req, res,next){
+   
+    async getCurrent(req, res,next){
         try {
-            const users = await userService.getAllUsers();
-            return res.json(users)
+            
+            console.log(req.user.id);
+            const user = await userService.getCurrentUser(req.user.id);
+            return res.json(user)
         } catch (e) {
             next(e)
         }
     }
 
-    async getClimbs(req,res, next){
+    async updateCurrent(req, res, next){
         try {
-            
+            const {fullName, bGrade, sGrade} = req.body;
+            const user = await userService.updateCurrentUser(req.user.id, fullName, bGrade, sGrade)
+            return res.json(user)
         } catch (e) {
             next(e)
-        }
+        } 
     }
-    
+
 
 }
 
